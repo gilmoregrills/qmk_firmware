@@ -1,9 +1,10 @@
 #include QMK_KEYBOARD_H
-
-// Each layer gets a name for readability, which is then used in the keymap matrix below.
-// The underscores don't mean anything - you can have a layer called STUFF or any other name.
-// Layer names don't all need to be of the same length, obviously, and you can also skip them
-// entirely and just use numbers.
+/*
+ * Each layer gets a name for readability, which is then used in the keymap matrix below.
+ * The underscores don't mean anything - you can have a layer called STUFF or any other name.
+ * Layer names don't all need to be of the same length, obviously, and you can also skip them
+ * entirely and just use numbers.
+ */
 
 #define _MA 0 //Main layer
 #define _FN 1 //Fn
@@ -12,11 +13,21 @@
 
 #define _______ KC_TRNS
 
-// void matrix_init_user() {
-//   set_unicode_input_mode(UNICODE_MODE_OSX);
-// }
+/* MACROS
+ * To add a new macro, simply add a new case to the process_record_user() switch statement like:
+ *
+ * case MACRO_NAME:
+ *   if (record->event.pressed) {
+ *     // do something on press, like SEND_STRING()
+ *   } else {
+ *     // do something on release
+ *   }
+ *   break;
+ *
+ * Then add the macro name to the macro_aliases enum, and add it to the keymap!
+ */
 
-enum custom_keycodes {
+enum macro_aliases {
   M_EMAIL = SAFE_RANGE,
   M_EMAIL2,
 };
@@ -25,24 +36,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case M_EMAIL:
       if (record->event.pressed) {
-        // when keycode QMKBEST is pressed
+        // when macro keycode is pressed
         SEND_STRING("robinfarrowyonge@gmail.com");
       } else {
-        // when keycode QMKBEST is released
+        // when macro keycode is released
       }
       break;
     case M_EMAIL2:
       if (record->event.pressed) {
-        // when keycode QMKBEST is pressed
+        // when macro keycode is pressed
         SEND_STRING("robin.farrow-yonge@news.co.uk");
       } else {
-        // when keycode QMKBEST is released
+        // when macro keycode is released
       }
       break;
 
   }
   return true;
 };
+
+/* EMOJIS
+ * Add emojis to the map below, ideally following the naming convention used already: [E_<emoji_name>] = 0x<unicode code>, //<emoji>
+ * Then, make sure that E_<emoji_name> is added to the unicode_aliases enum (the map and the enum should be in the same order, too).
+ * Once the emoji's been added like that, you can use it in keymaps with X(<unicode_alias>)
+ */
 
 enum unicode_aliases {
   E_QQ,
