@@ -50,6 +50,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // when macro keycode is released
       }
       break;
+    case M_TEST:
+      if (record->event.pressed) {
+        // when macro keycode is pressed
+        SEND_STRING("test!");
+      } else {
+        // when macro keycode is released
+      }
+      break;
 
   }
   return true;
